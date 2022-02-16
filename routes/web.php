@@ -35,10 +35,12 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
 
+
 Route::group(['middleware' => 'auth'], function () {	
 	Route::get('CreateNoticia', ['as' => 'noticia.add', 'uses' => 'App\Http\Controllers\NoticiaController@add']);
 	Route::put('createNoticia', ['as' => 'noticia.create', 'uses' => 'App\Http\Controllers\NoticiaController@create']);
 	
 });
+Route::get('/noticia/{id}', 'App\Http\Controllers\NoticiaController@show')->middleware('auth');
 
 

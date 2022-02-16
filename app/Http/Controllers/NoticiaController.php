@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Noticia;
+use App\Models\User;
 
 class NoticiaController extends Controller
 {
@@ -11,6 +12,15 @@ class NoticiaController extends Controller
     public function add()
     {
         return view('noticias.create');
+    }
+
+    public function show($id)
+    {
+        $noticia = Noticia::findOrFail($id);
+
+        $donoNoticia = User::where('id', $noticia->user_id)->first()->toArray();
+
+        return view('noticias.show', ['noticia' => $noticia, 'autor' => $donoNoticia]);
     }
 
     public function create(Request $request)
@@ -37,11 +47,13 @@ class NoticiaController extends Controller
             }
             // var_dump($request->hasFile('foto'));
             // var_dump($request->foto);
+            $user = auth()->user();
+            $noticia->user_id = $user->id;
             $noticia->save();
-            return redirect(route('noticia.add'))->withStatus(__('Noticia criada com sucesso.'));
+            return redirect(route('home'))->withStatus(__('Noticia criada com sucesso.'));
         } catch (\Exception $th) {
             //throw $th;
-            return redirect(route('noticia.add'))->withStatus(__('erro '));
+            return redirect(route('noticia.add'))->withStatus(__('erro ao cadastrar erro:=>'. $th));
 
         }
     }

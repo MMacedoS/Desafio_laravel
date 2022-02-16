@@ -25,7 +25,7 @@ class HomeController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $noticias = Noticia::simplePaginate(3);
+        $noticias = Noticia::where('user_id', '=', $user->id)->simplePaginate(3);
         return view('dashboard', ['user' => $user, 'noticias' => $noticias]);
     }
 }
