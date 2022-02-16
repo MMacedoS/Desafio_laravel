@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Noticia;
+
+
 class HomeController extends Controller
 {
     /**
@@ -22,7 +25,7 @@ class HomeController extends Controller
     public function index()
     {
         $user = auth()->user();
-
-        return view('dashboard', ['user' => $user]);
+        $noticias = Noticia::simplePaginate(3);
+        return view('dashboard', ['user' => $user, 'noticias' => $noticias]);
     }
 }

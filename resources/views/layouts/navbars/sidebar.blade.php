@@ -44,9 +44,9 @@
 
                 <div class="collapse show" id="noticias">
                     <ul class="nav pl-4">
-                        <li @if ($pageSlug == 'profile') class="active " @endif>
-                            <a href="{{ route('profile.edit')  }}">
-                                <i class="tim-icons icon-single-02"></i>
+                        <li @if ($pageSlug == 'noticias') class="active " @endif>
+                            <a href="{{ route('noticia.add')  }}">
+                                <i class="tim-icons icon-caps-small"></i>
                                 <p>{{ _('Cadastrar Notícia') }}</p>
                             </a>
                         </li>

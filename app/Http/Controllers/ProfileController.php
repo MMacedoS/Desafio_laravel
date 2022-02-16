@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\PasswordRequest;
-use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use App\Models\User;
 
@@ -70,7 +69,7 @@ class ProfileController extends Controller
     public function update(ProfileRequest $request)
     {
         $data = $request->all();
-        
+
         if($request->hasFile('foto') && $request->file('foto')->isValid())
         {
             $requestImage = $request->foto;

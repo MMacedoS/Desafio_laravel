@@ -24,7 +24,6 @@ Auth::routes();
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home')->middleware('auth');
 
-Route::get('/profile/create/', 'App\Http\Controllers\ProfileController@create')->middleware('auth');
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
@@ -34,6 +33,12 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('profiles', ['as' => 'profile.editAll', 'uses' => 'App\Http\Controllers\ProfileController@editAll']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
+});
+
+Route::group(['middleware' => 'auth'], function () {	
+	Route::get('CreateNoticia', ['as' => 'noticia.add', 'uses' => 'App\Http\Controllers\NoticiaController@add']);
+	Route::put('createNoticia', ['as' => 'noticia.create', 'uses' => 'App\Http\Controllers\NoticiaController@create']);
+	
 });
 
 
