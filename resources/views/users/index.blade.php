@@ -11,7 +11,7 @@
                                     <h4 class="card-title">Users</h4>
                                 </div>
                                 <div class="col-4 text-right">
-                                    <a href="#" class="btn btn-sm btn-primary">Add user</a>
+                                    <a href="{{  route('profile.add') }}" class="btn btn-sm btn-primary">Add user</a>
                                 </div>
                             </div>
                         </div>
@@ -26,23 +26,29 @@
                                         <th scope="col"></th>
                                     </tr></thead>
                                     <tbody>
+                                        @foreach($users as $user)
                                             <tr>
-                                                <td>Admin Admin</td>
+                                                <td>{{ $user->name }}</td>
                                                 <td>
-                                                    <a href="mailto:admin@white.com">admin@white.com</a>
+                                                    <a href="mailto:admin@white.com">{{ $user->email }}</a>
                                                 </td>
-                                                <td>25/02/2020 09:11</td>
+                                                <td>{{ date('d/m/Y H:i:s', strtotime($user->created_at)) }}</td>
                                                 <td class="text-right">
-                                                        <div class="dropdown">
-                                                            <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                <i class="fas fa-ellipsis-v"></i>
-                                                            </a>
-                                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                                <a class="dropdown-item" href="#">Edit</a>
+                                                        @if (auth()->user()->id == $user->id)
+                                                            <div class="dropdown">
+                                                                <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                    <i class="fas fa-ellipsis-v"></i>
+                                                                </a>
+                                                            
+                                                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                                                    <a class="dropdown-item" href="{{  route('profile.editAll') }}">Edit</a>
+                                                                </div>
+                                                            
                                                             </div>
-                                                        </div>
+                                                        @endif
                                                 </td>
                                             </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
