@@ -39,7 +39,8 @@ Route::group(['middleware' => 'auth'], function () {
 Route::group(['middleware' => 'auth'], function () {	
 	Route::get('CreateNoticia', ['as' => 'noticia.add', 'uses' => 'App\Http\Controllers\NoticiaController@add']);
 	Route::put('createNoticia', ['as' => 'noticia.create', 'uses' => 'App\Http\Controllers\NoticiaController@create']);
-	Route::get('pesquisar', ['as' => 'pesquisar', 'uses' => 'App\Http\Controllers\NoticiaController@getNoticia'])->middleware('auth');
+	Route::get('pesquisar', ['as' => 'pesquisar', 'uses' => 'App\Http\Controllers\NoticiaController@getNoticia']);
+	Route::get('EditNoticia', ['as' => 'noticia.index', 'uses' => 'App\Http\Controllers\NoticiaController@list']);
 	
 });
 Route::get('/noticia/{id}', 'App\Http\Controllers\NoticiaController@show')->middleware('auth');

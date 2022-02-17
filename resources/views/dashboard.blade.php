@@ -48,55 +48,5 @@
         });
     </script>
 
-    <script>
-        function noticia(noticia)
-        {
-           window.location.href = "/noticia/"+noticia;
-        }
-    </script>
-
-<script type="text/javascript">
-    $('#btnBusca').keyup(function()
-    {
-        if($('#btnBusca').val().length >= 3)
-        {
-           $('#lista').html('buscando...');
-
-           $.ajax({
-               url:"{{ route('pesquisar') }}",
-               method:'get',
-               datatype:'json',
-               data:{data:$('#btnBusca').val()},
-               success:function(data){
-                    lista(data);
-               }
-           });
-        }
-    });
-
-    function lista(data)
-    {
-        var html="";
-       
-        data.forEach(element => {
-            html+='<div class="col-sm-12" onclick="noticia('+element.id+')">';
-            html+='<div class="card card-chart">';
-            html+='<div class="card-header">';
-            html+='<h2 class="card-title"><i class="tim-icons icon-bell-55 text-primary"></i> '+element.title+'</h2>';
-            html+='</div>';
-            html+=' <div class="card-body">';
-            html+='<img src="/img/noticia/'+element.image+'" alt="'+element.title+'">';
-            html+='</div>';
-            html+='</div>';
-            html+='<div class="card-footer my-0">';
-            html+= element.subtitle;
-            html+='</div>';
-
-            html+='</div>';
-            html+='</div>';            
-        });
-        
-        $('#lista').html(html);    
-    }
-</script>
+    
 @endpush

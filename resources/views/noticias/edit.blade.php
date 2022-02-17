@@ -1,4 +1,4 @@
-@extends('layouts.app', ['page' => __('Create Noticias'), 'pageSlug' => 'noticia'])
+@extends('layouts.app', ['page' => __('Edit Noticias'), 'pageSlug' => 'noticias'])
 
 @section('content')
 <script src="https://cdn.ckeditor.com/4.17.2/standard/ckeditor.js"></script>

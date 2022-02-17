@@ -30,7 +30,7 @@
                                             <tr>
                                                 <td>{{ $user->name }}</td>
                                                 <td>
-                                                    <a href="mailto:admin@white.com">{{ $user->email }}</a>
+                                                    <a href="mailto:{{ $user->email }}">{{ $user->email }}</a>
                                                 </td>
                                                 <td>{{ date('d/m/Y H:i:s', strtotime($user->created_at)) }}</td>
                                                 <td class="text-right">

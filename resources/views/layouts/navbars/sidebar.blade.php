@@ -44,10 +44,17 @@
 
                 <div class="collapse show" id="noticias">
                     <ul class="nav pl-4">
-                        <li @if ($pageSlug == 'noticias') class="active " @endif>
+                        <li @if ($pageSlug == 'noticia') class="active " @endif>
                             <a href="{{ route('noticia.add')  }}">
                                 <i class="tim-icons icon-caps-small"></i>
                                 <p>{{ _('Cadastrar Notícia') }}</p>
+                            </a>
+                        </li>
+
+                        <li @if ($pageSlug == 'noticias') class="active " @endif>
+                            <a href="{{ route('noticia.index')  }}">
+                                <i class="tim-icons icon-bullet-list-67"></i>
+                                <p>{{ _('Noticia Management') }}</p>
                             </a>
                         </li>
                        

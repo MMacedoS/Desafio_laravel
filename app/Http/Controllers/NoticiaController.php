@@ -12,16 +12,7 @@ class NoticiaController extends Controller
     public function add()
     {
         return view('noticias.create');
-    }
-
-    public function show($id)
-    {
-        $noticia = Noticia::findOrFail($id);
-
-        $donoNoticia = User::where('id', $noticia->user_id)->first()->toArray();
-
-        return view('noticias.show', ['noticia' => $noticia, 'autor' => $donoNoticia]);
-    }
+    }  
 
     public function create(Request $request)
     {
@@ -58,9 +49,26 @@ class NoticiaController extends Controller
         }
     }
 
+    public function show($id)
+    {
+        $noticia = Noticia::findOrFail($id);
+
+        $donoNoticia = User::where('id', $noticia->user_id)->first()->toArray();
+
+        return view('noticias.show', ['noticia' => $noticia, 'autor' => $donoNoticia]);
+    }
+
     public function getNoticia(Request $request)
     {
         $noticias = Noticia::where('title','LIKE', '%'.$request->data.'%')->get();
         return response()->json($noticias);
+    }
+
+    public function list()
+    {
+        $user = auth()->user();
+        $noticias = Noticia::where('user_id', '=', $user->id)->get();
+
+        return view('noticias.index',['allNoticias' => $noticias]);
     }
 }
