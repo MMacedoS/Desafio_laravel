@@ -57,4 +57,10 @@ class NoticiaController extends Controller
 
         }
     }
+
+    public function getNoticia(Request $request)
+    {
+        $noticias = Noticia::where('title','LIKE', '%'.$request->data.'%')->get();
+        return response()->json($noticias);
+    }
 }

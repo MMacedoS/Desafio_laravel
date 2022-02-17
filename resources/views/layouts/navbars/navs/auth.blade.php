@@ -80,10 +80,13 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="{{ __('SEARCH') }}">
+                <input type="text" class="form-control" id="btnBusca" placeholder="{{ __('SEARCH') }}">
                 <button type="button" class="close" data-dismiss="modal" aria-label="{{ __('Close') }}">
                     <i class="tim-icons icon-simple-remove"></i>
               </button>
+            </div>
+            <div class="modal-body" id="lista" style="height: 40px;">
+                
             </div>
         </div>
     </div>
