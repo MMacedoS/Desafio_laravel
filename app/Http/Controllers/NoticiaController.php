@@ -58,6 +58,12 @@ class NoticiaController extends Controller
         return view('noticias.show', ['noticia' => $noticia, 'autor' => $donoNoticia]);
     }
 
+    public function getNoticiaId($id)
+    {
+        $noticia = Noticia::findOrFail($id);      
+        return response()->json($noticia);
+    }
+
     public function getNoticia(Request $request)
     {
         $noticias = Noticia::where('title','LIKE', '%'.$request->data.'%')->get();
@@ -71,4 +77,47 @@ class NoticiaController extends Controller
 
         return view('noticias.index',['allNoticias' => $noticias]);
     }
+
+    public function update(Request $request)
+    {
+        try {
+            //code...       
+            $data = $request->except('_token','_method','fotoAntiga');
+        
+            if($request->hasFile('image') && $request->file('image')->isValid())
+            {
+               if(!file_exists("/img/noticias/".$request->image))
+               {
+                $requestImage = $request->image;
+
+                $extension = $requestImage->extension();
+
+                $imageName = md5($requestImage->getClientOriginalName() . strtolower('now')). "." . $extension;
+
+                $requestImage->move(public_path('img/noticia'),$imageName);
+                $data['image'] = $imageName;               
+               }else
+               {
+                $data['image'] = $request->fotoAntiga;
+               }
+            }
+
+            Noticia::findOrFail($request->id)->update($data);
+            
+            return redirect('/noticia/'.$request->id)->withStatus(__('Noticia criada com sucesso.'));
+
+        } catch (\Exception $th) {
+            //throw $th;
+            return redirect(route('noticia.add'))->withStatus(__('erro ao editar noticia'.$th->getMessage()));
+
+        }
+    }
+
+    public function destroy($id)
+    {
+        Noticia::findOrFail($id)->delete();
+
+        return redirect( route('noticia.index'))->withStatus(__('Noticia deletada com sucesso.'));
+    }
+
 }

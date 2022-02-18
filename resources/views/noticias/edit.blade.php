@@ -14,35 +14,49 @@
         box-shadow: none;
         transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
+        img#img-preview {
+            height: 100px;
+            width: 100%;
+        }
 </style>
 <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="title">{{ _('Criar Notícia') }}</h5>
+                    <h5 class="title">{{ _('Editar Notícia') }}</h5>                   
                 </div>
-                <form method="post" action="{{ route('noticia.create') }}" enctype="multipart/form-data" autocomplete="off">
+                <form method="post" action="{{ route('noticia.edit') }}" enctype="multipart/form-data" autocomplete="off">
                     <div class="card-body">
                             @csrf
                             @method('put')
 
                             @include('alerts.success')
 
-                            <div class="form-group{{ $errors->has('foto') ? ' has-danger' : '' }}">
-                                <label>{{ _('Imagem') }}</label>
-                                <input type="file" name="foto" class="form-control-file" id="foto" >
-                                @include('alerts.feedback', ['field' => 'foto'])
-                            </div>
+                            <div class="form-group{{ $errors->has('foto') ? ' has-danger' : '' }} row">
+                               
+                                <input type="hidden" name="id" class="form-control-file" id="id" >
 
+                                <div class="col-sm-6">
+                                    <label>{{ _('Imagem') }}</label>
+                                    <input type="file" name="image" class="form-control-file" id="image" >
+                                    @include('alerts.feedback', ['field' => 'foto'])         
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="hidden" name="fotoAntiga" class="form-control-file" id="fotoAntiga" >
+                                    <img src="" id="img-preview" alt="imagem da noticia" class="img-preview">
+                                </div>                               
+                                                     
+                            </div>
+                          
                             <div class="form-group{{ $errors->has('title') ? ' has-danger' : '' }}">
                                 <label>{{ _('Titulo') }}</label>
-                                <input type="text" name="title" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" placeholder="{{ _('titulo da noticia') }}" >
+                                <input type="text" name="title" id="title" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" placeholder="{{ _('titulo da noticia') }}" >
                                 @include('alerts.feedback', ['field' => 'title'])
                             </div>
 
                             <div class="form-group{{ $errors->has('subtitle') ? ' has-danger' : '' }}">
                                 <label>{{ _('SubTitulo') }}</label>
-                                <input type="text" name="subtitle" class="form-control{{ $errors->has('subtitle') ? ' is-invalid' : '' }}" placeholder="{{ _('subtitulo da noticia') }}" >
+                                <input type="text" name="subtitle" id="subtitle" class="form-control{{ $errors->has('subtitle') ? ' is-invalid' : '' }}" placeholder="{{ _('subtitulo da noticia') }}" >
                                 @include('alerts.feedback', ['field' => 'subtitle'])
                             </div>
 
@@ -54,7 +68,7 @@
                             
                             <div class="form-group{{ $errors->has('font') ? ' has-danger' : '' }}">
                                 <label>{{ _('Fonte') }}</label>
-                                <input type="text" name="font" class="form-control{{ $errors->has('font') ? ' is-invalid' : '' }}" placeholder="{{ _('fonte da noticia') }}" >
+                                <input type="text" name="font" id="font" class="form-control{{ $errors->has('font') ? ' is-invalid' : '' }}" placeholder="{{ _('fonte da noticia') }}" >
                                 @include('alerts.feedback', ['field' => 'font'])
                             </div>
                     </div>
@@ -66,7 +80,31 @@
 
            
         </div>
+</div>
 <script>
     CKEDITOR.replace( 'description' );
 </script>
+<script src="{{ asset('white') }}/js/core/jquery.min.js"></script>
+
+<script>
+    
+    $(function(){
+        $.ajax({
+            url:"/getnoticia/"+{{ $id }},
+            method:'get',
+            datatype:'json',
+            success:function(data){
+               $('#title').val(data.title);
+               $('#id').val(data.id);
+               $('#subtitle').val(data.subtitle);
+               $('#description').val(CKEDITOR.instances.description.setData(data.description));
+               $('#font').val(data.font);
+               $('#img-preview').attr('src', '/img/noticia/' + data.image);
+               $('#image').attr('src', 'img/noticia/' + data.image);
+               $('#fotoAntiga').val(data.image);
+            }
+        });
+    });
+</script>
+
 @endsection
