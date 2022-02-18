@@ -40,11 +40,11 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('CreateNoticia', ['as' => 'noticia.add', 'uses' => 'App\Http\Controllers\NoticiaController@add']);
 	Route::put('createNoticia', ['as' => 'noticia.create', 'uses' => 'App\Http\Controllers\NoticiaController@create']);
 	Route::put('editNoticia', ['as' => 'noticia.edit', 'uses' => 'App\Http\Controllers\NoticiaController@update']);
-	Route::get('pesquisar', ['as' => 'pesquisar', 'uses' => 'App\Http\Controllers\NoticiaController@getNoticia']);
+	Route::get('pesquisar', ['as' => 'pesquisar', 'uses' => 'App\Http\Controllers\HomeController@getNoticia']);
 	Route::get('noticias', ['as' => 'noticia.index', 'uses' => 'App\Http\Controllers\NoticiaController@list']);		
 });
 Route::get('/noticia/{id}', 'App\Http\Controllers\NoticiaController@show')->middleware('auth');
-Route::get('/getnoticia/{id}', 'App\Http\Controllers\NoticiaController@getNoticiaId')->middleware('auth');
+Route::get('/getnoticia/{id}', 'App\Http\Controllers\HomeController@getNoticiaId')->middleware('auth');
 Route::delete('/noticia/{id}', 'App\Http\Controllers\NoticiaController@destroy')->middleware('auth');
 Route::get('noticias/edit/{id}', function ($id) { return view('noticias.edit',['id' => $id]); })->middleware('auth');
 

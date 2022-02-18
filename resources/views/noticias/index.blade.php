@@ -7,9 +7,15 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="row">
-                            <div class="col-8">
+                            <div class="col-2">
                                 <h4 class="card-title">Notícias</h4>
+                                
                             </div>
+                            <DIV class="col-4">
+                                <form action="{{ route('noticia.index') }}" method="get">
+                                    <input type="text" name="search" id="search" class="form-control" placeholder="digite sua consulta e pressione enter">
+                                </form>
+                            </DIV>
                             <div class="col-4 text-right">
                                 <a href="{{ route('noticia.add') }}" class="btn btn-sn btn-primary">Add Noticias</a>
                             </div>

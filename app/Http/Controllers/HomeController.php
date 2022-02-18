@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Noticia;
+use Illuminate\Http\Request;
 
 
 class HomeController extends Controller
@@ -27,5 +28,11 @@ class HomeController extends Controller
         $user = auth()->user();
         $noticias = Noticia::where('user_id', '=', $user->id)->simplePaginate(3);
         return view('dashboard', ['user' => $user, 'noticias' => $noticias]);
+    }
+
+    public function getNoticia(Request $request)
+    {
+        $noticias = Noticia::where('title','LIKE', '%'.$request->data.'%')->get();
+        return response()->json($noticias);
     }
 }

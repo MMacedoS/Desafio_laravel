@@ -62,20 +62,22 @@ class NoticiaController extends Controller
     {
         $noticia = Noticia::findOrFail($id);      
         return response()->json($noticia);
-    }
-
-    public function getNoticia(Request $request)
-    {
-        $noticias = Noticia::where('title','LIKE', '%'.$request->data.'%')->get();
-        return response()->json($noticias);
-    }
+    }   
 
     public function list()
     {
+        $search = request('search');
+        
         $user = auth()->user();
-        $noticias = Noticia::where('user_id', '=', $user->id)->get();
-
-        return view('noticias.index',['allNoticias' => $noticias]);
+        if(empty($search))
+        {
+            $noticias = Noticia::where('user_id', '=', $user->id)->get();
+        }else
+        {  
+            $noticias = Noticia::where('user_id', '=', $user->id)->where('title','LIKE','%'.$search.'%')->get();
+       
+        }
+        return view('noticias.index',['allNoticias' => $noticias, 'search' => $search]);
     }
 
     public function update(Request $request)
