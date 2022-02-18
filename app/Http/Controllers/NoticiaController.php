@@ -44,7 +44,7 @@ class NoticiaController extends Controller
             return redirect(route('home'))->withStatus(__('Noticia criada com sucesso.'));
         } catch (\Exception $th) {
             //throw $th;
-            return redirect(route('noticia.add'))->withStatus(__('erro ao cadastrar erro:=>'. $th));
+            return redirect(route('noticia.add'))->with('error','erro ao criar noticia'.$th->getMessage());
 
         }
     }
@@ -104,11 +104,11 @@ class NoticiaController extends Controller
 
             Noticia::findOrFail($request->id)->update($data);
             
-            return redirect('/noticia/'.$request->id)->withStatus(__('Noticia criada com sucesso.'));
+            return redirect('/noticia/'.$request->id)->withStatus(__('Noticia atualizada com sucesso.'));
 
         } catch (\Exception $th) {
             //throw $th;
-            return redirect(route('noticia.add'))->withStatus(__('erro ao editar noticia'.$th->getMessage()));
+            return redirect(route('noticia.add'))->with('error','erro ao editar noticia'.$th->getMessage());
 
         }
     }

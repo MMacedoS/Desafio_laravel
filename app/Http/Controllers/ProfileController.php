@@ -23,31 +23,40 @@ class ProfileController extends Controller
 
     public function create(ProfileRequest $request)
     {
-        $user = new User;
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->job = $request->job;
-        $user->password = Hash::make($request->password);
-        $user->description = $request->description;
-        $user->facebook = $request->facebook;
-        $user->twitter = $request->twitter;
-        $user->gmail = $request->gmail;
+        try {
+            //code...
+            
+            $user = new User;
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->job = $request->job;
+            $user->password = Hash::make($request->password);
+            $user->description = $request->description;
+            $user->facebook = $request->facebook;
+            $user->twitter = $request->twitter;
+            $user->gmail = $request->gmail;
 
-        if($request->hasFile('foto') && $request->file('foto')->isValid())
-        {
-            $requestImage = $request->foto;
+            if($request->hasFile('foto') && $request->file('foto')->isValid())
+            {
+                $requestImage = $request->foto;
 
-            $extension = $requestImage->extension();
+                $extension = $requestImage->extension();
 
-            $imageName = md5($requestImage->getClientOriginalName() . strtolower('now')). "." . $extension;
+                $imageName = md5($requestImage->getClientOriginalName() . strtolower('now')). "." . $extension;
 
-            $requestImage->move(public_path('img/profile'),$imageName);
-            $user->image = $imageName;
+                $requestImage->move(public_path('img/profile'),$imageName);
+                $user->image = $imageName;
+            }
+            // var_dump($request->hasFile('foto'));
+            // var_dump($request->foto);
+            $user->save();
+            return redirect(route('profile.add'))->withStatus(__('Profile successfully criado.'));
+
+        } catch (\Exception $th) {
+            //throw $th;
+            return redirect(route('profile.add'))->with('error','erro ao criar perfil'.$th->getMessage());
+            
         }
-        // var_dump($request->hasFile('foto'));
-        // var_dump($request->foto);
-        $user->save();
-        return redirect(route('profile.add'))->withStatus(__('Profile successfully criado.'));
     }
 
     public function editAll()
@@ -68,24 +77,33 @@ class ProfileController extends Controller
      */
     public function update(ProfileRequest $request)
     {
-        $data = $request->all();
+        try {
+            //code...
+        
+                $data = $request->all();
 
-        if($request->hasFile('foto') && $request->file('foto')->isValid())
-        {
-            $requestImage = $request->foto;
+                if($request->hasFile('foto') && $request->file('foto')->isValid())
+                {
+                    $requestImage = $request->foto;
 
-            $extension = $requestImage->extension();
+                    $extension = $requestImage->extension();
 
-            $imageName = md5($requestImage->getClientOriginalName() . strtolower('now')). "." . $extension;
+                    $imageName = md5($requestImage->getClientOriginalName() . strtolower('now')). "." . $extension;
 
-            $requestImage->move(public_path('img/profile'),$imageName);
-            $data['image'] = $imageName;
-            
-        }
+                    $requestImage->move(public_path('img/profile'),$imageName);
+                    $data['image'] = $imageName;
+                    
+                }
 
-        auth()->user()->update($data);
+                auth()->user()->update($data);
 
-        return back()->withStatus(__('Profile successfully updated.'));
+                return back()->withStatus(__('Profile successfully updated.'));
+
+            } catch (\Exception $th) {
+                //throw $th;
+                return back()->with('error','erro ao editar perfil'.$th->getMessage());
+                
+            }
     }
 
     /**

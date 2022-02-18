@@ -17,6 +17,8 @@
                     </div>
                     <div class="card-body">
                         <div>
+                        @include('alerts.success')
+
                         @if(count($allNoticias)==0)
                                       {{  __('Não possui noticias cadastradas') }}
                          @else
@@ -47,12 +49,12 @@
                                                     </a>
                                                             
                                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                        <a class="dropdown-item" href="noticias/edit/{{ $noticia->id }}">Edit</a>
+                                                        <a class="dropdown-item bg-info" style="border-radius:5px;" href="noticias/edit/{{ $noticia->id }}">Edit</a>
                                                                                                        
                                                         <form action="/noticia/{{ $noticia->id }}" method="post">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit" class="dropdown-item" href="/noticia/{{ $noticia->id }}">Delete</button>                        
+                                                            <button type="submit" class="dropdown-item bg-warning" style="border-radius:5px;" href="/noticia/{{ $noticia->id }}">Delete</button>                        
                                                         </form> 
                                                     </div>
                                                    
