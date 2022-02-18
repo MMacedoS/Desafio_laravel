@@ -44,8 +44,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('noticias', ['as' => 'noticia.index', 'uses' => 'App\Http\Controllers\NoticiaController@list']);		
 });
 Route::get('/noticia/{id}', 'App\Http\Controllers\NoticiaController@show')->middleware('auth');
-Route::get('/getnoticia/{id}', 'App\Http\Controllers\HomeController@getNoticiaId')->middleware('auth');
+Route::get('/getnoticia/{id}', 'App\Http\Controllers\NoticiaController@getNoticiaId')->middleware('auth');
 Route::delete('/noticia/{id}', 'App\Http\Controllers\NoticiaController@destroy')->middleware('auth');
-Route::get('noticias/edit/{id}', function ($id) { return view('noticias.edit',['id' => $id]); })->middleware('auth');
+Route::get('/noticias/edit/{id}', function ($id) { return view('noticias.edit',['id' => $id]); })->middleware('auth');
 
 

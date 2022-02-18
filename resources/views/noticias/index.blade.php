@@ -28,7 +28,7 @@
                         @if(count($allNoticias)==0)
                                       {{  __('Não possui noticias cadastradas') }}
                          @else
-                                 
+                              
                             <table class="table tablesorter">
                                 <thead class="text-primary">
                                     <tr>
@@ -55,7 +55,7 @@
                                                     </a>
                                                             
                                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                        <a class="dropdown-item bg-info" style="border-radius:5px;" href="noticias/edit/{{ $noticia->id }}">Edit</a>
+                                                        <a class="dropdown-item bg-info" style="border-radius:5px;" href="/noticias/edit/{{ $noticia->id }}">Edit</a>
                                                                                                        
                                                         <form action="/noticia/{{ $noticia->id }}" method="post">
                                                             @csrf
