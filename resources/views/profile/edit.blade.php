@@ -83,23 +83,23 @@
                                 <h5 class="title">{{ auth()->user()->name }}</h5>
                             </a>
                             <p class="description">
-                                {{ _('Ceo/Co-Founder') }}
+                                {{ auth()->user()->job }}
                             </p>
                         </div>
                     </p>
                     <div class="card-description">
-                        {{ _('Do not be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...') }}
+                        {{ auth()->user()->description }}
                     </div>
                 </div>
                 <div class="card-footer">
                     <div class="button-container">
-                        <button class="btn btn-icon btn-round btn-facebook">
+                        <button class="btn btn-icon btn-round btn-facebook" onclick="window.open('{{ auth()->user()->facebook }}','_blank')">
                             <i class="fab fa-facebook"></i>
                         </button>
-                        <button class="btn btn-icon btn-round btn-twitter">
+                        <button class="btn btn-icon btn-round btn-twitter" onclick="window.open('{{ auth()->user()->twitter }}','_blank')">
                             <i class="fab fa-twitter"></i>
                         </button>
-                        <button class="btn btn-icon btn-round btn-google">
+                        <button class="btn btn-icon btn-round btn-google" onclick="window.open('{{ auth()->user()->gmail }}','_blank')">
                             <i class="fab fa-google-plus"></i>
                         </button>
                     </div>
